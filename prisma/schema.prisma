@@ -1,0 +1,26 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["transactionApi"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User2 {
+  @@map("prisma_user")
+
+  id    String  @id
+  name  String
+  posts Post2[]
+}
+
+model Post2 {
+  @@map("prisma_post")
+
+  id     String @id
+  title  String
+  userID String @map("user")
+  user   User2  @relation(fields: [userID], references: [id])
+}
